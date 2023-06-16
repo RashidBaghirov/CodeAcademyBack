@@ -20,7 +20,7 @@ namespace CodeAcademy.Controllers
         [HttpGet("/cate")]
         public IActionResult GetAllcategory()
         {
-            List<Category> cate = _context.Categories.ToList();
+            List<Category> cate = _context.Categories.Include(x=>x.Professions).ThenInclude(x=>x.EducationMode).AsNoTracking().ToList();
 
             if (cate is null) return NotFound();
             return Ok(cate);

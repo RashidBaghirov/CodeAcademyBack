@@ -23,6 +23,8 @@ namespace CodeAcademy.DAL
         public DbSet<Cource> Cources { get; set; }
         public DbSet<Partnyor> Partnyors { get; set; }
         public DbSet<Graduant> Graduants { get; set; }
+        public DbSet<Request> Requests { get; set; }
+
 
 
 
