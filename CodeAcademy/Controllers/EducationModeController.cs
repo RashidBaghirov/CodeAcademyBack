@@ -78,5 +78,19 @@ namespace CodeAcademy.Controllers
             return Ok(teacher);
         }
 
+
+        [HttpGet("/search/{keyword}")]
+        public IActionResult Search(string keyword)
+        {
+            var searchResults = _context.EducationModes
+                .Include(e => e.Professions)
+                .ThenInclude(p => p.Category)
+                .Where(e => e.Name.Contains(keyword))
+                .AsNoTracking()
+                .ToList();
+
+            return Ok(searchResults);
+        }
+
     }
 }
