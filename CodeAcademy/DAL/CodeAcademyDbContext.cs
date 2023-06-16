@@ -20,6 +20,12 @@ namespace CodeAcademy.DAL
         public DbSet<Accordion> Accordions { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ModePhotos> ModePhotos { get; set; }
+        public DbSet<Cource> Cources { get; set; }
+        public DbSet<Partnyor> Partnyors { get; set; }
+        public DbSet<Graduant> Graduants { get; set; }
+
+
+
 
 
 

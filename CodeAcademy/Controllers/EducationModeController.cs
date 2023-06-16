@@ -53,6 +53,8 @@ namespace CodeAcademy.Controllers
                 .Include(x => x.EducationMode).ThenInclude(x => x.ModePhotos)
                 .Include(x => x.Accordions)
                               .Include(x => x.EducationMode).ThenInclude(x => x.Teachers)
+                              .Include(x => x.EducationMode).ThenInclude(x => x.Cources)
+
                 .AsNoTracking()
                 .FirstOrDefault(x => x.Id == id);
 
@@ -63,6 +65,18 @@ namespace CodeAcademy.Controllers
         }
 
 
+
+        [HttpGet("/teacher/{id}")]
+        public IActionResult GetTeacherId(int id)
+        {
+            if (id == 0)
+                return NoContent();
+
+            Teacher teacher = _context.Teachers.Include(x => x.EducationMode).ThenInclude(x=>x.Professions).AsNoTracking().FirstOrDefault(x => x.Id == id);
+
+            if (teacher is null) return NotFound();
+            return Ok(teacher);
+        }
 
     }
 }

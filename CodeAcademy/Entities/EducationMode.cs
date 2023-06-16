@@ -19,6 +19,9 @@
         public List<Profession> Professions { get; set; }
         public List<ModePhotos> ModePhotos { get; set; }
         public List<Teacher> Teachers { get; set; }
+        public List<Cource> Cources { get; set; }
+        public List<Graduant> Graduants { get; set; }
+
 
 
 
@@ -26,6 +29,9 @@
         {
             Professions = new();
             ModePhotos = new();
+            Teachers = new();
+            Cources = new();
+            Graduants = new();
         }
     }
 }
