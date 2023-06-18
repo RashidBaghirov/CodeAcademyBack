@@ -1,10 +1,11 @@
 ﻿using CodeAcademy.Configurations;
 using CodeAcademy.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeAcademy.DAL
 {
-    public class CodeAcademyDbContext : DbContext
+    public class CodeAcademyDbContext : IdentityDbContext<User>
     {
         public CodeAcademyDbContext(DbContextOptions<CodeAcademyDbContext> options) : base(options)
         {

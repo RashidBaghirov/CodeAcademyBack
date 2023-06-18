@@ -14,7 +14,7 @@ namespace CodeAcademy.Profiles
             CreateMap<Category, CategoryGet>()
             .ForMember(dest => dest.Professions, opt => opt.MapFrom(src => src.Professions.Select(p => p.Id).ToList()));
             CreateMap<Request, RequestDto>().ReverseMap();
-
+            CreateMap<Request, RequestGetDto>();
         }
     }
 }

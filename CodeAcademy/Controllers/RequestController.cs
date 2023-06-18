@@ -11,7 +11,7 @@ namespace CodeAcademy.Controllers
         private readonly CodeAcademyDbContext _context;
         private readonly IMapper _map;
 
-        public RequestController(CodeAcademyDbContext context,IMapper map)
+        public RequestController(CodeAcademyDbContext context, IMapper map)
         {
             _context = context;
             _map = map;
@@ -35,6 +35,26 @@ namespace CodeAcademy.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+
+        [HttpGet("/requests")]
+        public async Task<IActionResult> AllRequests()
+        {
+            List<Request> requests = _context.Requests.ToList();
+            List<RequestGetDto> requestGetDtos = _map.Map<List<RequestGetDto>>(requests);
+
+            return Ok(requestGetDtos);
+        }
+
+
+        [HttpGet("/replace")]
+        public async Task<IActionResult> ReplaceRequests()
+        {
+            List<Request> requests = _context.Requests.ToList();
+            List<RequestGetDto> requestGetDtos = _map.Map<List<RequestGetDto>>(requests);
+
+            return Ok(requestGetDtos);
         }
 
     }
