@@ -4,6 +4,7 @@ namespace CodeAcademy.DTO
 {
     public class RequestGetDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Surname { get; set; }
@@ -19,5 +20,6 @@ namespace CodeAcademy.DTO
         public string EmployeeCount { get; set; }
 
         public string AdditionalInfo { get; set; }
+        public bool IsReply { get; set; }
     }
 }

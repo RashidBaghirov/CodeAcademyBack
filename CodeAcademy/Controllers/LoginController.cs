@@ -1,6 +1,7 @@
 ﻿using CodeAcademy.DAL;
 using CodeAcademy.DTO;
 using CodeAcademy.Entities;
+using CodeAcademy.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace CodeAcademy.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
+        [Authorize(Roles =nameof(Roles.superadmin)+","+ nameof(Roles.admin))]
         public async Task<IActionResult> Login([FromForm] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
@@ -33,9 +35,9 @@ namespace CodeAcademy.Controllers
             {
                 return BadRequest("Invalid credentials");
             }
-
             if (user.EmailConfirmed == false) return BadRequest();
             var isValidCredentials = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            var userRoles = await _userManager.GetRolesAsync(user);
 
             if (!isValidCredentials)
             {
