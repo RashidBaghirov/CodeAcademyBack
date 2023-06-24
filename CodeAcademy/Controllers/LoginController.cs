@@ -17,16 +17,18 @@ namespace CodeAcademy.Controllers
     {
         private readonly CodeAcademyDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public LoginController(CodeAcademyDbContext context, UserManager<User> userManager)
+        public LoginController(CodeAcademyDbContext context, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        [Authorize(Roles =nameof(Roles.superadmin)+","+ nameof(Roles.admin))]
+        [Authorize(Roles = nameof(Roles.superadmin) + "," + nameof(Roles.admin))]
         public async Task<IActionResult> Login([FromForm] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
@@ -37,17 +39,19 @@ namespace CodeAcademy.Controllers
             }
             if (user.EmailConfirmed == false) return BadRequest();
             var isValidCredentials = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-            var userRoles = await _userManager.GetRolesAsync(user);
 
             if (!isValidCredentials)
             {
                 return BadRequest("Invalid credentials");
             }
 
+            var username = user.UserName; 
+
             var token = GenerateJwtToken(user);
 
-            return Ok(new { Token = token });
+            return Ok(new { Token = token, Username = username }); 
         }
+
 
         private string GenerateJwtToken(User user)
         {
@@ -79,6 +83,15 @@ namespace CodeAcademy.Controllers
                 provider.GetBytes(key);
                 return key;
             }
+        }
+
+
+
+        [HttpPost("/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return NoContent();
         }
 
     }
